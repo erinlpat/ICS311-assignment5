@@ -68,11 +68,11 @@ class Connection {
 }
 
 // Create users
-const user1 = new User("alicinwonderland", "Alice", 25, "female", ["Ally"], "Apple", "Honolulu");
-const user2 = new User("bobthebuilder", "Bob", 30, "male", ["Bobby"], "Microsoft", "Tokyo");
-const user3 = new User("charliechaplin", "Charles", 35, "male", ["Charlie"], "Google", "Seoul");
+const user1 = new User("aliceinwonderland", "Alice", 25, "female", ["Ally"], "Apple", "Honolulu");
+const user2 = new User("bobby", "Bob", 30, "male", ["Bobby"], "Microsoft", "Tokyo");
+const user3 = new User("charlie", "Charles", 35, "male", ["Charlie"], "Google", "Seoul");
 const user4 = new User("daisyduke", "Daisy", 28, "female", ["Duke"], "Amazon", "New York");
-const user5 = new User("eddytheeagle", "Eddy", 32, "male", ["Eagle"], "Facebook", "London");
+const user5 = new User("theeagle", "Eddy", 32, "male", ["Eagle"], "Facebook", "London");
 
 // Add connections
 user1.addConnection("follows", user2);
@@ -94,11 +94,18 @@ user2.addComment("Nice post!", "2023-01-01T11:00:00Z", post1);
 user3.addComment("Agreed!", "2023-01-01T12:00:00Z", post1);
 user1.addComment("Good Morning to you too!", "2023-01-02T10:00:00Z", post2);
 user3.addComment("Have a good night!", "2023-01-03T23:00:00Z", post3);
-user4.addComment("Thanks for the update!", "2023-01-06T15:00:00Z", post6);
-user5.addComment("Interesting news!", "2023-01-05T13:00:00Z", post5);
-user1.addComment("Good to know!", "2023-01-06T16:00:00Z", post6);
+user4.addComment("Thanks for updating!", "2023-01-06T15:00:00Z", post6);
+user5.addComment("Wow thats interesting!", "2023-01-05T13:00:00Z", post5);
+user1.addComment("So proud!", "2023-01-06T16:00:00Z", post6);
+user2.addComment("Good Job!", "2023-01-06T16:50:00Z", post6);
+user3.addComment("You're so funny!", "2023-01-06T16:30:00Z", post6);
+user3.addComment("Wow!", "2023-01-06T16:30:00Z", post6);
+user3.addComment("Amazing!", "2023-01-06T16:30:00Z", post6);
+user3.addComment("Cool!", "2023-01-06T16:30:00Z", post6);
+user3.addComment("=)!", "2023-01-06T16:30:00Z", post6);
 
 // Add views to posts
+post1.addView(user1, "2023-01-01T10:25:00Z");
 post1.addView(user2, "2023-01-01T10:30:00Z");
 post1.addView(user3, "2023-01-01T11:30:00Z");
 post1.addView(user4, "2023-01-01T12:30:00Z");
@@ -149,7 +156,19 @@ function updateGraph(criteria) {
 
   // Add post nodes
   const postMap = new Map();
-  [user1.posts, user2.posts, user3.posts, user4.posts, user5.posts].flat().forEach(post => {
+  const allPosts = [user1.posts, user2.posts, user3.posts, user4.posts, user5.posts].flat();
+
+  let mostCommentedPost = null;
+  let mostViewedPost = null;
+
+  allPosts.forEach(post => {
+    if (!mostCommentedPost || post.comments.length > mostCommentedPost.comments.length) {
+      mostCommentedPost = post;
+    }
+    if (!mostViewedPost || post.views.length > mostViewedPost.views.length) {
+      mostViewedPost = post;
+    }
+
     const importance = calculateImportance(post, criteria);
     const postNode = {
       id: post.content,
@@ -187,6 +206,17 @@ function updateGraph(criteria) {
       });
     });
   });
+
+  const mostImportantPostDiv = document.getElementById("most-important-post");
+  if (criteria === "comments") {
+    mostImportantPostDiv.innerText = `Most Commented Post: ${mostCommentedPost.content}`;
+  } else if (criteria === "views") {
+    mostImportantPostDiv.innerText = `Most Viewed Post: ${mostViewedPost.content}`;
+  } else if (criteria === "blend") {
+    mostImportantPostDiv.innerText = `Most Commented Post: ${mostCommentedPost.content} \n Most Viewed Post: ${mostViewedPost.content}`;
+  } else {
+    mostImportantPostDiv.innerText = '';
+  }
 
   // Update the graph
   renderGraph(criteria);
