@@ -142,8 +142,22 @@ const trendingPosts = reportGen.generateTrendingPostsReport(
   { age: 30 }      //user attributes to filter by
 );
 
-//display results
-console.log("Trending Posts:");
-trendingPosts.forEach(post => {
-  console.log(`Post by ${post.author.username}: ${post.content}`);
+//displays results in HTML
+function displayReport(posts) {
+  const reportDiv = document.getElementById('report');
+  posts.forEach(post => {
+    const postDiv = document.createElement('div');
+    postDiv.className = 'post';
+    postDiv.innerHTML = `
+      <h3>Post by ${post.author.username}</h3>
+      <p>${post.content}</p>
+      <p><strong>Created at:</strong> ${post.creationTime}</p>
+      <p><strong>Views:</strong> ${post.views.length}</p>
+    `;
+    reportDiv.appendChild(postDiv);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  displayReport(trendingPosts);
 });
