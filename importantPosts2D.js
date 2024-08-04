@@ -105,6 +105,7 @@ user3.addComment("Cool!", "2023-01-06T16:30:00Z", post6);
 user3.addComment("=)!", "2023-01-06T16:30:00Z", post6);
 
 // Add views to posts
+post1.addView(user5, "2023-01-01T10:20:00Z");
 post1.addView(user1, "2023-01-01T10:25:00Z");
 post1.addView(user2, "2023-01-01T10:30:00Z");
 post1.addView(user3, "2023-01-01T11:30:00Z");
