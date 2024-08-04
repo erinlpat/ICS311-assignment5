@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Data Visualization</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    .node { stroke: #fff; stroke-width: 1.5px; }
+    .link { stroke: #999; stroke-opacity: 0.6; }
+    .user { fill: blue; }
+    .post { fill: red; }
+  </style>
+</head>
+<body>
+<div>
+  <label for="importance-criteria">Importance Criteria:</label>
+  <select id="importance-criteria">
+    <option value="blend">Blend</option>
+    <option value="comments">Comments</option>
+    <option value="views">Views</option>
+  </select>
+  <button id="load-graph">Load Graph</button>
+</div>
+<div id="graph-container"></div>
+<script src="../importantPosts2D.js"></script>
+</body>
+</html>
+
+
