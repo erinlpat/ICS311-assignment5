@@ -133,6 +133,8 @@ user3.addComment("Agreed!", "2023-01-01T12:00:00Z", post1);
 post1.addView(user2, "2023-01-01T10:30:00Z");
 post1.addView(user3, "2023-01-01T11:30:00Z");
 post2.addView(user1, "2023-01-02T11:30:00Z");
+post2.addView(user3, "2023-01-02T12:30:00Z");
+post4.addView(user1, "2023-01-04T13:30:00Z");
 
 //create reportGenerator instance
 const reportGen = new reportGenerator([user1, user2, user3, user4]);
@@ -158,11 +160,6 @@ function displayReport(posts) {
     `;
     reportDiv.appendChild(postDiv);
   });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  displayReport(trendingPosts);
-});
 }
 
 document.addEventListener('DOMContentLoaded', () => {
